@@ -2,3 +2,17 @@
 
 * Goal
 build a todo list all using etcd as the backend
+
+* database structure
+#+begin_src
+/list
+/list/ID
+/item
+/item/LISTID
+/item/LISTID/ID
+#+end_src
+
+* License
+Copyright 2023 Caleb Woodbine.
+This project is licensed under the [[http://www.gnu.org/licenses/agpl-3.0.html][AGPL-3.0]] and is [[https://www.gnu.org/philosophy/free-sw.en.html][Free Software]].
+This program comes with absolutely no warranty.
