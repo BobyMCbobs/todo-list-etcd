@@ -12,7 +12,7 @@ func GetEnvOrDefault(envName string, defaultValue string, required ...bool) stri
 	if found {
 		return output
 	}
-	if len(required) > 0 && required[0] == true && output == "" {
+	if len(required) > 0 && required[0] && output == "" {
 		log.Panicf("error: env '%v' is empty when expected to be set", envName)
 	}
 	return defaultValue
