@@ -1,0 +1,4 @@
+#+title: todo list app
+
+* Goal
+build a todo list all using etcd as the backend
