@@ -1,0 +1,31 @@
+name: go container apps
+
+on:
+  push: {}
+  pull_request: {}
+  schedule:
+    - cron: "0 0 * * *"
+  release:
+    types:
+      - published
+      - created
+      - released
+      - edited
+  workflow_dispatch: {}
+
+permissions:
+  actions: read
+  packages: write
+  contents: write
+  issues: write
+  pull-requests: write
+  id-token: write
+  security-events: write
+  statuses: write
+  checks: write
+
+jobs:
+  go-container-apps:
+    uses: BobyMCbobs/todo-list-etcd/.github/workflows/reusable-go-container-apps.yml@main
+    with:
+      updateGoVersionAutoMerge: true
