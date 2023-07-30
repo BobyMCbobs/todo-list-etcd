@@ -23,12 +23,15 @@ func main() {
 	if err := clientset.Put("/thing/a", "hello"); err != nil {
 		panic(err)
 	}
+	if err := clientset.Put("/thing/b", "hello"); err != nil {
+		panic(err)
+	}
 	val, err := clientset.Get("/thing/a")
 	if err != nil {
 		panic(err)
 	}
 	fmt.Println("value:", string(val.Value))
-	kvs, err = clientset.ListWithPrefix("")
+	kvs, err = clientset.ListWithPrefix("/thing")
 	if err != nil {
 		panic(err)
 	}
@@ -38,6 +41,9 @@ func main() {
 		fmt.Println("value:", string(v.Value))
 	}
 	if err := clientset.Delete("/thing/a"); err != nil {
+		panic(err)
+	}
+	if err := clientset.Delete("/thing/b"); err != nil {
 		panic(err)
 	}
 }
