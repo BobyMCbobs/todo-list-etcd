@@ -20,10 +20,10 @@ func main() {
 		fmt.Println("key:", string(v.Key))
 		fmt.Println("value:", string(v.Value))
 	}
-	if err := clientset.Put("/thing/a", "hello"); err != nil {
+	if _, err := clientset.Put("/thing/a", "hello"); err != nil {
 		panic(err)
 	}
-	if err := clientset.Put("/thing/b", "hello"); err != nil {
+	if _, err := clientset.Put("/thing/b", "hello"); err != nil {
 		panic(err)
 	}
 	val, err := clientset.Get("/thing/a")
@@ -40,10 +40,10 @@ func main() {
 		fmt.Println("key:", string(v.Key))
 		fmt.Println("value:", string(v.Value))
 	}
-	if err := clientset.Delete("/thing/a"); err != nil {
+	if _, err := clientset.Delete("/thing/a"); err != nil {
 		panic(err)
 	}
-	if err := clientset.Delete("/thing/b"); err != nil {
+	if _, err := clientset.Delete("/thing/b"); err != nil {
 		panic(err)
 	}
 }
