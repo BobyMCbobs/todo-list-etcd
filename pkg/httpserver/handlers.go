@@ -373,3 +373,28 @@ func (h *HTTPServer) apiDeleteItem() http.HandlerFunc {
 		response(w, "OK", http.StatusOK)
 	})
 }
+
+func (h *HTTPServer) apiDeleteItemAll() http.HandlerFunc {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// claims, ok := r.Context().Value("jwt").(*types.JWTclaim)
+		// if !ok {
+		// 	log.Println("error: failed to get JWT claim from request")
+		// 	response(w, "INTERNAL_ERROR", http.StatusInternalServerError)
+		// 	return
+		// }
+		vars := mux.Vars(r)
+		listid, ok := vars["listid"]
+		if !ok {
+			log.Println("Failed to find name param")
+			response(w, "INTERNAL_ERROR", http.StatusInternalServerError)
+			return
+		}
+		if err := h.todolistManager.Items(listid).DeleteAll(context.TODO()); err != nil {
+			log.Printf("error getting lists: %v\n", err)
+			response(w, "NOT_FOUND", http.StatusNotFound)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		response(w, "OK", http.StatusOK)
+	})
+}
