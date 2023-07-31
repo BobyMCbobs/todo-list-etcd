@@ -1,0 +1,47 @@
+#+title: Learnings
+
+#+begin_quote
+What have I learned about etcd, it's client and building an applications with it
+#+end_quote
+
+* Database'ing
+etcd is a key-value database and stores data like
+#+begin_src go
+map[string]string
+#+end_src
+
+Given needing to store structured data, stringified JSON is a suitable type of data to store.
+
+* Limits
+etcd can store up to 8GB of data and 1MB per key.
+
+* Data structuring
+Data in etcd can be retrieved by getting with a prefix
+#+begin_src shell
+etcdctl get / --prefix --keys-only
+#+end_src
+
+passing which ever key is useful for the data stored or retrieved.
+
+When choosing a way to store data, it must be considered how data links to other data.
+I'm very used to ACID compliant databases, namely Postgres (❤️).
+
+Given the common /thing/ of getting a values of a certain time out of a database, the keys must be stuctured in a particular way.
+
+The data relationship in this app is one list to many items.
+I had originally though for
+#+begin_example
+/list/LISTID/item/ID
+#+end_example
+
+but when getting with prefix, it means all lists and items will be fetched which isn't what ya want.
+
+So, I figured to split it up to be like
+#+begin_example
+/list
+/list/ID
+/item
+/item/LISTID
+/item/LISTID/ID
+#+end_example
+that way multi-resource CRUD operations are possible.

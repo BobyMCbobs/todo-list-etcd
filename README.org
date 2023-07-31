@@ -3,6 +3,9 @@
 * Goal
 build a todo list all using etcd as the backend
 
+* Learnings
+I've documented my learnings: [[./learnings.org][./learnings.org]]
+
 * database structure
 #+begin_src
 /list
