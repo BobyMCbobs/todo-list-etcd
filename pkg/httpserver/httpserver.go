@@ -49,9 +49,9 @@ func NewHTTPServer(todolistManager *todolist.Manager) *HTTPServer {
 	apiListsRouters.HandleFunc("/{listid}/item", h.apiDeleteItemAll()).Methods(http.MethodDelete)
 	apiListsRouters.HandleFunc("/{listid}/item", h.apiPostItem()).Methods(http.MethodPost)
 
-	// webFolderPath := common.GetWebFolder()
-	// webHandler := http.FileServer(http.Dir(webFolderPath))
-	// router.PathPrefix("/").Handler(webHandler).Methods(http.MethodGet)
+	webFolderPath := common.GetWebFolder()
+	webHandler := http.FileServer(http.Dir(webFolderPath))
+	router.PathPrefix("/").Handler(webHandler).Methods(http.MethodGet)
 
 	s := &http.Server{
 		Handler:           router,

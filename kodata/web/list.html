@@ -1,0 +1,54 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <title>Todo list (etcd) - List</title>
+        <meta name="description" content="">
+        <meta name="todolist-page" content="list">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+        <script defer src="/scripts/ext/axios.min.js"></script>
+    </head>
+    <body>
+        <h1>Todo list</h1>
+        <a href="/"><--back</a>
+        <h1 id=list-name>...</h1>
+        <template id="list-item-template">
+            <tr>
+                <td class="list-item-name">
+                    <p></p>
+                </td>
+                <td class="list-item-description">
+                    <p></p>
+                </td>
+                <td class="list-item-delete">
+                    <button>X</button>
+                </td>
+            </tr>
+        </template>
+        <div id="lists">
+            <div id="lists-list">
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <br/>
+        <div id="new">
+            <form method="post" id="form">
+                <label for="name">Name:</label>
+                <input type="text" name="name" id="post-form-name" />
+                <br />
+                <label for="description">Description:</label>
+                <input type="text" name="description" id="post-form-description" />
+                <br />
+                <input id="post-form-submit" type="submit" value="Publish" onClick="listItemPost(this.form)" />
+            </form>
+        </div>
+        <script defer src="/scripts/todolist.js"></script>
+    </body>
+</html>

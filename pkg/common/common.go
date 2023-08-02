@@ -3,6 +3,7 @@ package common
 import (
 	"log"
 	"os"
+	"path"
 )
 
 // GetEnvOrDefault ...
@@ -20,4 +21,12 @@ func GetEnvOrDefault(envName string, defaultValue string, required ...bool) stri
 
 func GetAppPort() (output string) {
 	return GetEnvOrDefault("APP_PORT", ":8080")
+}
+
+func GetWebFolder() string {
+	output := path.Join(GetEnvOrDefault("KO_DATA_PATH", "./kodata"), "web")
+	if _, err := os.Stat(output); os.IsNotExist(err) {
+		log.Panicf("error: web folder set (%v) does not exist", output)
+	}
+	return output
 }
