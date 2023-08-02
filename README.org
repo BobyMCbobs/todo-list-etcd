@@ -6,6 +6,19 @@ build a todo list all using etcd as the backend
 * Learnings
 I've documented my learnings: [[./learnings.org][./learnings.org]]
 
+* Development
+Run /etcd/ locally with
+#+begin_src shell
+etcd
+#+end_src
+
+Bring up the backend
+#+begin_src shell
+go run .
+#+end_src
+
+Visit [[http://localhost:8080][localhost:8080]]
+
 * database structure
 #+begin_src
 /list
