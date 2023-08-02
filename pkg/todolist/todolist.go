@@ -27,12 +27,39 @@ func (m *Manager) ValidateList(input *types.List) error {
 	if len(input.Name) == 0 {
 		return fmt.Errorf("error: name must not be empty")
 	}
+	if len(input.Name) > 35 {
+		return fmt.Errorf("error: name must be under 35 character in length")
+	}
+	if len(input.Description) > 45 {
+		return fmt.Errorf("error: name must be under 45 character in length")
+	}
+	if _, err := uuid.Parse(input.ID); input.ID != "" && err != nil {
+		return fmt.Errorf("error: failed to parse id uuid")
+	}
+	if _, err := uuid.Parse(input.AuthorID); input.AuthorID != "" && err != nil {
+		return fmt.Errorf("error: failed to parse author id uuid")
+	}
 	return nil
 }
 
 func (m *Manager) ValidateItem(input *types.Item) error {
 	if len(input.Name) == 0 {
 		return fmt.Errorf("error: name must not be empty")
+	}
+	if len(input.Name) > 35 {
+		return fmt.Errorf("error: name must be under 35 character in length")
+	}
+	if len(input.Description) > 45 {
+		return fmt.Errorf("error: name must be under 45 character in length")
+	}
+	if _, err := uuid.Parse(input.ID); input.ID != "" && err != nil {
+		return fmt.Errorf("error: failed to parse id uuid")
+	}
+	if _, err := uuid.Parse(input.AuthorID); input.AuthorID != "" && err != nil {
+		return fmt.Errorf("error: failed to parse author id uuid")
+	}
+	if _, err := uuid.Parse(input.ListID); input.ListID != "" && err != nil {
+		return fmt.Errorf("error: failed to parse list id uuid")
 	}
 	if input.ListID == "" {
 		return fmt.Errorf("error: missing list id")
