@@ -12,20 +12,6 @@ import (
 	"github.com/BobyMCbobs/todo-list-etcd/pkg/types"
 )
 
-func ValidateList(input *types.List) error {
-	if len(input.Name) == 0 {
-		return fmt.Errorf("error: name must not be empty")
-	}
-	return nil
-}
-
-func ValidateItem(input *types.Item) error {
-	if len(input.Name) == 0 {
-		return fmt.Errorf("error: name must not be empty")
-	}
-	return nil
-}
-
 type Manager struct {
 	clientset *etcd.Client
 }
@@ -35,6 +21,26 @@ func NewManager(clientset *etcd.Client) *Manager {
 		clientset: clientset,
 	}
 	return mgr
+}
+
+func (m *Manager) ValidateList(input *types.List) error {
+	if len(input.Name) == 0 {
+		return fmt.Errorf("error: name must not be empty")
+	}
+	return nil
+}
+
+func (m *Manager) ValidateItem(input *types.Item) error {
+	if len(input.Name) == 0 {
+		return fmt.Errorf("error: name must not be empty")
+	}
+	if input.ListID == "" {
+		return fmt.Errorf("error: missing list id")
+	}
+	if list, err := m.Lists().Get(context.TODO(), input.ListID); err != nil || list == nil {
+		return fmt.Errorf("error: list not found")
+	}
+	return nil
 }
 
 type listManager struct {
@@ -93,7 +99,7 @@ func (m *listManager) List(ctx context.Context) ([]*types.List, error) {
 }
 
 func (m *listManager) Put(ctx context.Context, item *types.List) (*types.List, error) {
-	if err := ValidateList(item); err != nil {
+	if err := m.manager.ValidateList(item); err != nil {
 		return nil, err
 	}
 	currentTimestamp := time.Now().Unix()
@@ -181,7 +187,7 @@ func (m *itemManager) List(ctx context.Context) ([]*types.Item, error) {
 }
 
 func (m *itemManager) Put(ctx context.Context, item *types.Item) (*types.Item, error) {
-	if err := ValidateItem(item); err != nil {
+	if err := m.manager.ValidateItem(item); err != nil {
 		return nil, err
 	}
 	currentTimestamp := time.Now().Unix()
