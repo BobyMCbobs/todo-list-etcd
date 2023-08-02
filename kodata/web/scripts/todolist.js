@@ -73,7 +73,8 @@ function listItemPost(listid, item) {
     url: `/api/list/${params.id}/item`,
     data: {
       'name': name,
-      'description': description
+      'description': description,
+      'itemID': params.id
     }
   }).then(resp => {
     submitButton.disabled = false
@@ -153,6 +154,11 @@ function todoListPage() {
     const listNameTitle = document.querySelector("h1#list-name")
     listNameTitle.textContent = list.name
   })
+  let clearItemsButton = document.querySelector("#clear")
+  clearItemsButton.onclick = () => {
+    listItemDeleteAll(params.id)
+    window.location.reload(false)
+  }
   const listsList = document.querySelector("#lists-list table")
   const template = document.querySelector("#list-item-template")
   listItemList(params.id).then(resp => {
