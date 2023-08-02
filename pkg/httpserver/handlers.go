@@ -294,33 +294,34 @@ func (h *HTTPServer) apiPostOrPutItem(method string) http.HandlerFunc {
 			}
 			id = existingID
 		}
-		var list *types.Item
+		var item *types.Item
 		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			response(w, "INTERNAL_ERROR", http.StatusInternalServerError)
 			return
 		}
-		if err := json.Unmarshal(body, &list); err != nil {
+		if err := json.Unmarshal(body, &item); err != nil {
 			response(w, "INTERNAL_ERROR", http.StatusInternalServerError)
 			return
 		}
+		item.ListID = listid
 		if method == http.MethodPut {
-			list.ID = id
+			item.ID = id
 		}
-		listCreated, err := h.todolistManager.Items(listid).Put(context.TODO(), list)
+		itemCreated, err := h.todolistManager.Items(listid).Put(context.TODO(), item)
 		if err != nil {
 			log.Println(err)
 			response(w, "INTERNAL_ERROR", http.StatusInternalServerError)
 			return
 		}
-		listBytes, err := json.Marshal(listCreated)
+		itemBytes, err := json.Marshal(itemCreated)
 		if err != nil {
 			log.Println(err)
 			response(w, "INTERNAL_ERROR", http.StatusInternalServerError)
 			return
 		}
 		w.Header().Set("Content-Type", "application/json")
-		response(w, string(listBytes), http.StatusOK)
+		response(w, string(itemBytes), http.StatusOK)
 	})
 }
 
