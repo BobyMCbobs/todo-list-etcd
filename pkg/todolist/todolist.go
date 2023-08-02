@@ -12,6 +12,20 @@ import (
 	"github.com/BobyMCbobs/todo-list-etcd/pkg/types"
 )
 
+func ValidateList(input *types.List) error {
+	if len(input.Name) == 0 {
+		return fmt.Errorf("error: name must not be empty")
+	}
+	return nil
+}
+
+func ValidateItem(input *types.Item) error {
+	if len(input.Name) == 0 {
+		return fmt.Errorf("error: name must not be empty")
+	}
+	return nil
+}
+
 type Manager struct {
 	clientset *etcd.Client
 }
@@ -79,6 +93,9 @@ func (m *listManager) List(ctx context.Context) ([]*types.List, error) {
 }
 
 func (m *listManager) Put(ctx context.Context, item *types.List) (*types.List, error) {
+	if err := ValidateList(item); err != nil {
+		return nil, err
+	}
 	currentTimestamp := time.Now().Unix()
 	var id string
 	if item.ID != "" {
@@ -164,6 +181,9 @@ func (m *itemManager) List(ctx context.Context) ([]*types.Item, error) {
 }
 
 func (m *itemManager) Put(ctx context.Context, item *types.Item) (*types.Item, error) {
+	if err := ValidateItem(item); err != nil {
+		return nil, err
+	}
 	currentTimestamp := time.Now().Unix()
 	var id string
 	if item.ID != "" {
