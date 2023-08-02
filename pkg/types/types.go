@@ -11,7 +11,7 @@ type List struct {
 	Name                  string    `json:"name"`
 	Description           string    `json:"description"`
 	AlertOn               time.Time `json:"alertOn"`
-	Author                string    `json:"author"`
+	AuthorID              string    `json:"authorID"`
 	Items                 []*Item   `json:"items"`
 	CreationTimestamp     string    `json:"creationTimestamp"`
 	ModificationTimestamp string    `json:"modificationTimestamp"`
@@ -24,7 +24,7 @@ type Item struct {
 	Name                  string    `json:"name"`
 	Description           string    `json:"description"`
 	AlertOn               time.Time `json:"alertOn"`
-	Author                string    `json:"author"`
+	AuthorID              string    `json:"authorID"`
 	ListID                string    `json:"listID"`
 	Complete              string    `json:"complete"`
 	CreationTimestamp     string    `json:"creationTimestamp"`
