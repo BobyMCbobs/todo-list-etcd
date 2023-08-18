@@ -156,8 +156,7 @@ function todoListPage() {
   })
   let clearItemsButton = document.querySelector("#clear")
   clearItemsButton.onclick = () => {
-    listItemDeleteAll(params.id)
-    window.location.reload(false)
+    listItemDeleteAll(params.id).then(() => window.location.reload(false))
   }
   const listsList = document.querySelector("#lists-list table")
   const template = document.querySelector("#list-item-template")
